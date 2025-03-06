@@ -192,9 +192,12 @@ class GeoCoder:
             return r
         else:
             print(f"Error invalid muniCd: municd={muni} addr={addr}")
-            return {'errors': 'Invalid muniCode',
-                    'maidenhead': mh.to_maiden(float(lat), float(lng), precision=4)
-                    }
+            if lat and lng:
+                gl = mh.to_maiden(float(lat), float(lng), precision=4)
+            else:
+                gl = "INVALID"
+            
+            return {'errors': 'Invalid muniCode', 'maidenhead': gl}
         
     def gsi_rev_geocoder(self, lat, lng, elev=False):
         try:
